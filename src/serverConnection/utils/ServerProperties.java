@@ -13,6 +13,9 @@ public class ServerProperties {
 
     public static final int PORT_NUMBER = 32000;
 
+    public static final String LOG_PATH_LINUX = "/home/dev/";
+    public static final String LOG_PATH_WINDOWS = "d:/";
+    
     public static final int TIME_PERIOD = 1000 * 30;
     
 }

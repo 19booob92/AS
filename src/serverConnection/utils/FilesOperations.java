@@ -17,11 +17,17 @@ import javax.swing.JOptionPane;
 public class FilesOperations {
 
     private File file;
-
+    private static FileWriter fileWriter;
+    
+    
     public static void saveDataToFile(String dataToSave) {
         try {
-            FileWriter fstream = new FileWriter("/home/dev/serverLog.txt", true);
-            BufferedWriter out = new BufferedWriter(fstream);
+            if (System.getProperty("os.name").split(" ")[0].equals("Windows")) {
+                fileWriter = new FileWriter(ServerProperties.LOG_PATH_WINDOWS + "serverLog.txt", true);
+            } else if (System.getProperty("os.name").split(" ")[0].equals("Linux")) {
+                fileWriter = new FileWriter(ServerProperties.LOG_PATH_LINUX + "serverLog.txt", true);
+            }
+            BufferedWriter out = new BufferedWriter(fileWriter);
             out.write(dataToSave);
             out.newLine();
             out.close();
