@@ -1,6 +1,7 @@
 package com.autospa.server;
 
 import java.io.IOException;
+import java.net.Socket;
 import java.text.DateFormat;
 import java.util.Date;
 import java.util.List;
@@ -15,7 +16,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.autospa.main.Client;
+import com.autospa.main.ClientController;
+import com.autospa.main.ClientModel;
 import com.autospa.main.Server;
 import com.autospa.utils.ServerProperties;
 
@@ -28,9 +30,8 @@ public class HomeController {
 	private Server server = null;
 	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
 	
-	@RequestMapping(value = "/carWashers")
-	public @ResponseBody List getConnectedCarWashers() {
-		
+	@RequestMapping(value = "/carWashers", method = RequestMethod.GET)
+	public @ResponseBody List<ClientModel> getConnectedCarWashers() {
 		return server.getClientsList();
 	}
 	

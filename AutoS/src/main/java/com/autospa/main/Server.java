@@ -3,6 +3,7 @@ package com.autospa.main;
 import java.io.IOException;
 import java.net.InetAddress;
 import java.net.ServerSocket;
+import java.net.Socket;
 import java.util.ArrayList;
 import java.util.LinkedHashSet;
 import java.util.List;
@@ -19,12 +20,12 @@ public class Server {
 	private int port;
 	private int kaCounter = 0;
 	private Thread clientCommunicationThread;
-	private List<Client> clientsList;
+	private List<ClientModel> clientsList;
 
-	private Client simpleClient;
+	private ClientController simpleClient;
 
 	public Server() {
-		this.clientsList = new ArrayList<Client>();
+		this.clientsList = new ArrayList<>();
 		this.port = ServerProperties.PORT_NUMBER;
 	}
 
@@ -36,8 +37,9 @@ public class Server {
 
 		while (true) {
 			try {
-				simpleClient = new Client(serverSocket.accept(), this);
-				clientsList.add(simpleClient);
+				simpleClient = new ClientController(serverSocket.accept(), this);
+				clientsList.add(simpleClient.getNewClient());
+				
 				Thread client = new Thread(simpleClient);
 				client.start();
 
@@ -47,19 +49,19 @@ public class Server {
 		}
 	}
 
-	public List<Client> getClientsList() {
+	public List<ClientModel> getClientsList() {
 		return clientsList;
 	}
 
-	public void setClientsList(List<Client> clientsList) {
+	public void setClientsList(List<ClientModel> clientsList) {
 		this.clientsList = clientsList;
 	}
 
-	public Client getSimpleClient() {
+	public ClientController getSimpleClient() {
 		return simpleClient;
 	}
 
-	public void setSimpleClient(Client simpleClient) {
+	public void setSimpleClient(ClientController simpleClient) {
 		this.simpleClient = simpleClient;
 	}
 

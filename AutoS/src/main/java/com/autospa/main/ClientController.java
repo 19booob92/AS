@@ -3,29 +3,31 @@ package com.autospa.main;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
+import java.io.Serializable;
 import java.net.Socket;
 import java.util.Arrays;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import javax.xml.bind.annotation.XmlRootElement;
+
 import com.autospa.utils.FilesOperations;
 import com.autospa.utils.ProtocolProperties;
 import com.autospa.utils.ServerProperties;
 
-public class Client implements Runnable {
+public class ClientController implements Runnable {
 
 	private String name;
 	private Socket socketClient;
 	private DataInputStream stdIn;
 	private DataOutputStream stdOut;
 	private byte[] messageData;
-	private static int iterator = 0;
-	private final int id;
 	private Server server;
+	private int keepAliveCounter;
+	ClientModel clientModel = new ClientModel();
 	
-	public Client(Socket socket, Server server) {
-		this.name = name;
-		id = iterator++;
+	
+	public ClientController(Socket socket, Server server) {
 		this.socketClient = socket;
 		this.server = server;
 	}
@@ -33,18 +35,18 @@ public class Client implements Runnable {
 	@Override
 	public void run() {
 		try {
+			clientModel.setAvaliable(true);
 			stdIn = new DataInputStream(socketClient.getInputStream());
 			stdOut = new DataOutputStream(socketClient.getOutputStream());
-			System.err.println("nowy " + id);
-			this.setName("Nazwa myjni");
 			while (true) {
 				System.out.println("Oczekiwanie na klientów...");
 				// getIdentifyMessage();
 				getKeepAlive();
-				// setScheduler();
+				setScheduler();
 			}
 		} catch (IOException ex) {
-			server.getClientsList().remove(this);
+//			server.getClientsList().remove(this);
+			clientModel.setAvaliable(false);
 		}
 	}
 
@@ -85,7 +87,8 @@ public class Client implements Runnable {
 
 		byte tmp = messageData[ProtocolProperties.FIVE_BYTES_MESSAGE - 1];
 		messageData[ProtocolProperties.FIVE_BYTES_MESSAGE - 1] = (byte) (tmp + 1);
-
+		keepAliveCounter++;
+		
 		FilesOperations
 				.saveDataToFile(System.currentTimeMillis()
 						+ "   Grupa: POTWIERDZENIE_I_STEROWANIE  KEEP_ALIVE "
@@ -118,29 +121,61 @@ public class Client implements Runnable {
 		scheduler.scheduleAtFixedRate(new TimerTask() {
 			@Override
 			public void run() {
-				try {
-					sendOnePLNCoinsCountRequest();
-				} catch (IOException ex) {
-					System.err.print(ex);
+				if (keepAliveCounter < 5) {
+					clientModel.setAvaliable(false);
 				}
+				// try {
+				// sendOnePLNCoinsCountRequest();
+				// } catch (IOException ex) {
+				// System.err.print(ex);
+				// }
 			}
 		}, ServerProperties.TIME_PERIOD, ServerProperties.TIME_PERIOD);
 	}
+	
+	public ClientModel getNewClient() {
 
-	@Override
-	public String toString() {
-		return id + " " + name;
+		clientModel.setName(this.socketClient.getInetAddress().getHostAddress());
+		return clientModel;
 	}
 
-	public int getId() {
-		return id;
+	public Socket getSocketClient() {
+		return socketClient;
 	}
 
-	public String getName() {
-		return name;
+	public void setSocketClient(Socket socketClient) {
+		this.socketClient = socketClient;
 	}
 
-	public void setName(String name) {
-		this.name = name;
+	public byte[] getMessageData() {
+		return messageData;
+	}
+
+	public void setMessageData(byte[] messageData) {
+		this.messageData = messageData;
+	}
+
+	public Server getServer() {
+		return server;
+	}
+
+	public void setServer(Server server) {
+		this.server = server;
+	}
+
+	public DataInputStream getStdIn() {
+		return stdIn;
+	}
+
+	public void setStdIn(DataInputStream stdIn) {
+		this.stdIn = stdIn;
+	}
+
+	public DataOutputStream getStdOut() {
+		return stdOut;
+	}
+
+	public void setStdOut(DataOutputStream stdOut) {
+		this.stdOut = stdOut;
 	}
 }
