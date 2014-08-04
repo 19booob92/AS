@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Set;
 
+import org.apache.commons.logging.Log;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -21,28 +22,39 @@ import com.autospa.main.ClientModel;
 import com.autospa.main.Server;
 import com.autospa.utils.ServerProperties;
 
-/**
- * Handles requests for the application home page.
- */
 @Controller
 public class HomeController {
-	
+
 	private Server server = null;
-	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
+	private static final Logger logger = LoggerFactory
+			.getLogger(HomeController.class);
+
 	
 	@RequestMapping(value = "/carWashers", method = RequestMethod.GET)
 	public @ResponseBody List<ClientModel> getConnectedCarWashers() {
 		return server.getClientsList();
 	}
-	
+
 	@RequestMapping(value = "/start", method = RequestMethod.GET)
 	public @ResponseBody void start() {
-        try {
-        	server = new Server();
-        	server.startServer(ServerProperties.SERVER_IP);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+		if (server == null) {
+			try {
+				server = new Server();
+				server.startServer(ServerProperties.SERVER_IP);
+			} catch (IOException e) {
+				logger.error("Nie uda³o siê uruchomiæ serwera");
+				e.printStackTrace();
+			}
+		} else {
+			logger.error("Serwer jest ju¿ uruchomiony");
+		}
+
 	}
-	
+
+	@RequestMapping(value = "/stop", method = RequestMethod.GET)
+	public @ResponseBody void stop() {
+		server.stopServer();
+		server = null;
+	}
+
 }

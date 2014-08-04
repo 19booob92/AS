@@ -21,9 +21,10 @@ public class Server {
 	private int kaCounter = 0;
 	private Thread clientCommunicationThread;
 	private List<ClientModel> clientsList;
-
+	private boolean isRunning;
 	private ClientController simpleClient;
 
+	
 	public Server() {
 		this.clientsList = new ArrayList<>();
 		this.port = ServerProperties.PORT_NUMBER;
@@ -31,11 +32,11 @@ public class Server {
 
 	public void startServer(String ip) throws IOException {
 		serverSocket = new ServerSocket(port, port, InetAddress.getByName(ip));
-
+		isRunning = true;
 		System.out.println("Uruchamianie serwera na porcie: " + port
 				+ " i IP = " + ip);
 
-		while (true) {
+		while (isRunning) {
 			try {
 				simpleClient = new ClientController(serverSocket.accept(), this);
 				clientsList.add(simpleClient.getNewClient());
@@ -64,5 +65,13 @@ public class Server {
 	public void setSimpleClient(ClientController simpleClient) {
 		this.simpleClient = simpleClient;
 	}
-
+	
+	public void stopServer() {
+		try {
+			isRunning  = false;
+			serverSocket.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
 }

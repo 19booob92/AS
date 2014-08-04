@@ -9,5 +9,6 @@ public class ServerProperties {
 	public static final String SERVER_IP = "95.143.246.67";
 //	public static final String SERVER_IP = "127.0.0.1";
 
-	public static final int TIME_PERIOD = 1000 * 35;
+	public static final int TIME_PERIOD = 1000 * 50;
+	public static final int GET_ONE_PLN_STATE_TIME_PERIOD= 1000 * 120;
 }

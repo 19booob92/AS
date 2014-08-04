@@ -23,7 +23,7 @@ public class ClientController implements Runnable {
 	private DataOutputStream stdOut;
 	private byte[] messageData;
 	private Server server;
-	private int keepAliveCounter;
+	private int keepAliveCounter = 0;
 	ClientModel clientModel = new ClientModel();
 	
 	
@@ -38,14 +38,13 @@ public class ClientController implements Runnable {
 			clientModel.setAvaliable(true);
 			stdIn = new DataInputStream(socketClient.getInputStream());
 			stdOut = new DataOutputStream(socketClient.getOutputStream());
+			setScheduler();
 			while (true) {
 				System.out.println("Oczekiwanie na klientów...");
 				// getIdentifyMessage();
 				getKeepAlive();
-				setScheduler();
 			}
 		} catch (IOException ex) {
-//			server.getClientsList().remove(this);
 			clientModel.setAvaliable(false);
 		}
 	}
@@ -64,19 +63,19 @@ public class ClientController implements Runnable {
 		}
 			break;
 		case (byte) 0x02: {
-
+			// FIXME
 		}
 			break;
 		case (byte) 0x03: {
-
+			// FIXME
 		}
 			break;
 		case (byte) 0x04: {
-
+			// FIXME
 		}
 			break;
 		default: {
-
+			// FIXME
 		}
 		}
 	}
@@ -84,10 +83,10 @@ public class ClientController implements Runnable {
 	private void getKeepAlive() throws IOException {
 		messageData = new byte[ProtocolProperties.FIVE_BYTES_MESSAGE];
 		stdIn.read(messageData);
-
 		byte tmp = messageData[ProtocolProperties.FIVE_BYTES_MESSAGE - 1];
+		
 		messageData[ProtocolProperties.FIVE_BYTES_MESSAGE - 1] = (byte) (tmp + 1);
-		keepAliveCounter++;
+		++keepAliveCounter;
 		
 		FilesOperations
 				.saveDataToFile(System.currentTimeMillis()
@@ -109,6 +108,7 @@ public class ClientController implements Runnable {
 		FilesOperations.saveDataToFile(System.currentTimeMillis()
 				+ "   Grupa: cykliczne dane finansowe, ilość monet 1 zł  "
 				+ messageData[5] + "\n");
+		clientModel.setOnePLNCoins(messageData[4]);
 	}
 
 	private void sendMessage(byte[] message) throws IOException {
@@ -117,20 +117,33 @@ public class ClientController implements Runnable {
 	}
 
 	private void setScheduler() {
-		Timer scheduler = new Timer();
-		scheduler.scheduleAtFixedRate(new TimerTask() {
+		Timer checkAvaliableScheduler = new Timer();
+		Timer getOnePLNCoinsState = new Timer();
+
+		checkAvaliableScheduler.scheduleAtFixedRate(new TimerTask() {
 			@Override
 			public void run() {
-				if (keepAliveCounter < 5) {
-					clientModel.setAvaliable(false);
+				System.err.println(keepAliveCounter);
+				if (keepAliveCounter < 3) {
+					 clientModel.setAvaliable(false);
+				} else {
+					clientModel.setAvaliable(true);
 				}
-				// try {
-				// sendOnePLNCoinsCountRequest();
-				// } catch (IOException ex) {
-				// System.err.print(ex);
-				// }
+				keepAliveCounter = 0;
 			}
 		}, ServerProperties.TIME_PERIOD, ServerProperties.TIME_PERIOD);
+
+		getOnePLNCoinsState.scheduleAtFixedRate(new TimerTask() {
+			@Override
+			public void run() {
+				 try {
+					 sendOnePLNCoinsCountRequest();
+				 } catch (IOException ex) {
+					 System.err.print(ex);
+				 }
+			}
+		}, ServerProperties.GET_ONE_PLN_STATE_TIME_PERIOD, ServerProperties.GET_ONE_PLN_STATE_TIME_PERIOD);
+		
 	}
 	
 	public ClientModel getNewClient() {
