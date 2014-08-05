@@ -24,7 +24,6 @@ public class ServerController {
 
 	private List<ClientModel> clientsList;
 
-	
 	public ServerController() {
 		this.clientsList = new ArrayList<ClientModel>();
 		this.port = ServerProperties.PORT_NUMBER;
@@ -76,10 +75,10 @@ public class ServerController {
 			clientsList.add(tmpClientModel);
 		}
 	}
-	
+
 	public void stopServer() {
 		try {
-			isRunning  = false;
+			isRunning = false;
 			serverSocket.close();
 		} catch (IOException e) {
 			e.printStackTrace();

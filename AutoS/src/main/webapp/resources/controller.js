@@ -20,7 +20,7 @@ $(function() {
 	$('#btn').click(function() {
 		$(document).ready(function() {
 			$("table").find("tr:gt(0)").remove();
-			$.getJSON("/server/carWashers", function(data) {
+			$.getJSON("/Auto/carWashers", function(data) {
 				var tr;
 				for (var i = 0; i < data.length; i++) {
 					tr = $('<tr/>');
