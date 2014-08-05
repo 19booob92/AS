@@ -6,9 +6,10 @@ public class ClientModel implements Serializable{
 
 	private String name;
 	private static int iterator = 0;
-	private final int id = ++iterator;
+	private int id = ++iterator;
 	private boolean isAvaliable;
 	private int onePLNCoins;
+	
 	
 	public String getName() {
 		return name;
@@ -25,6 +26,9 @@ public class ClientModel implements Serializable{
 	public int getId() {
 		return id;
 	}
+	public void setId(int id) {
+		this.id = id;
+	}
 	public boolean isAvaliable() {
 		return isAvaliable;
 	}
@@ -40,6 +44,7 @@ public class ClientModel implements Serializable{
 	
 	@Override
 	public boolean equals(Object clientModel) {
-		return this.getName().equals(((ClientModel) clientModel).getName());
+		ClientModel client = (ClientModel) clientModel;
+		return this.getName().equals(client.getName());
 	}
 }

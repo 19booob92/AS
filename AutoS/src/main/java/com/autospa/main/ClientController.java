@@ -84,7 +84,7 @@ public class ClientController implements Runnable {
 		messageData = new byte[ProtocolProperties.FIVE_BYTES_MESSAGE];
 		stdIn.read(messageData);
 		byte tmp = messageData[ProtocolProperties.FIVE_BYTES_MESSAGE - 1];
-		
+		System.err.println("cala wiadomosc KA" + Arrays.toString(messageData));
 		messageData[ProtocolProperties.FIVE_BYTES_MESSAGE - 1] = (byte) (tmp + 1);
 		++keepAliveCounter;
 		
@@ -104,7 +104,9 @@ public class ClientController implements Runnable {
 				ProtocolProperties.NULL, (byte) 0x01, ProtocolProperties.NULL,
 				ProtocolProperties.NULL });
 
-		int count = stdIn.read(messageData);
+//		int count = stdIn.read(messageData);
+		System.err.println("cala wiadomosc monety" + Arrays.toString(messageData));
+		System.err.println(messageData[4] +  "  " + messageData[5] );
 		FilesOperations.saveDataToFile(System.currentTimeMillis()
 				+ "   Grupa: cykliczne dane finansowe, iloÅ›Ä‡ monet 1 zÅ‚  "
 				+ messageData[5] + "\n");
@@ -124,6 +126,12 @@ public class ClientController implements Runnable {
 			@Override
 			public void run() {
 				System.err.println(keepAliveCounter);
+				try {
+					 System.err.println("wysylam");
+					 sendOnePLNCoinsCountRequest();
+				 } catch (IOException ex) {
+					 System.err.print(ex+"nie uda³o siêŸ");
+				 }
 				if (keepAliveCounter < 3) {
 					 clientModel.setAvaliable(false);
 				} else {
@@ -137,9 +145,10 @@ public class ClientController implements Runnable {
 			@Override
 			public void run() {
 				 try {
+					 System.err.println("wysylam");
 					 sendOnePLNCoinsCountRequest();
 				 } catch (IOException ex) {
-					 System.err.print(ex);
+					 System.err.print(ex+"nie uda³o siêŸ");
 				 }
 			}
 		}, ServerProperties.GET_ONE_PLN_STATE_TIME_PERIOD, ServerProperties.GET_ONE_PLN_STATE_TIME_PERIOD);

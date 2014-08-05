@@ -3,12 +3,10 @@ package com.autospa.main;
 import java.io.IOException;
 import java.net.InetAddress;
 import java.net.ServerSocket;
-import java.net.Socket;
 import java.util.ArrayList;
-import java.util.LinkedHashSet;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import java.util.logging.Logger;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -26,7 +24,7 @@ public class Server {
 
 	
 	public Server() {
-		this.clientsList = new ArrayList<>();
+		this.clientsList = new ArrayList<ClientModel>();
 		this.port = ServerProperties.PORT_NUMBER;
 	}
 
@@ -39,8 +37,7 @@ public class Server {
 		while (isRunning) {
 			try {
 				simpleClient = new ClientController(serverSocket.accept(), this);
-				clientsList.add(simpleClient.getNewClient());
-				
+				addToList();
 				Thread client = new Thread(simpleClient);
 				client.start();
 
@@ -64,6 +61,18 @@ public class Server {
 
 	public void setSimpleClient(ClientController simpleClient) {
 		this.simpleClient = simpleClient;
+	}
+
+	public void addToList() {
+		ClientModel tmpClientModel = simpleClient.getNewClient();
+		int indexOfItem = clientsList.indexOf(tmpClientModel);
+		if (indexOfItem >= 0) {
+			tmpClientModel.setId(clientsList.get(indexOfItem).getId());
+			clientsList.remove(indexOfItem);
+			clientsList.add(indexOfItem, tmpClientModel);
+		} else {
+			clientsList.add(tmpClientModel);
+		}
 	}
 	
 	public void stopServer() {
