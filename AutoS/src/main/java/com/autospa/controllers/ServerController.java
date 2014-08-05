@@ -1,4 +1,4 @@
-package com.autospa.main;
+package com.autospa.controllers;
 
 import java.io.IOException;
 import java.net.InetAddress;
@@ -11,19 +11,21 @@ import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.autospa.utils.ServerProperties;
+import com.autospa.models.ClientModel;
+import com.autospa.properties.ServerProperties;
 
-public class Server {
+public class ServerController {
 	private ServerSocket serverSocket;
 	private int port;
 	private int kaCounter = 0;
 	private Thread clientCommunicationThread;
-	private List<ClientModel> clientsList;
 	private boolean isRunning;
 	private ClientController simpleClient;
 
+	private List<ClientModel> clientsList;
+
 	
-	public Server() {
+	public ServerController() {
 		this.clientsList = new ArrayList<ClientModel>();
 		this.port = ServerProperties.PORT_NUMBER;
 	}

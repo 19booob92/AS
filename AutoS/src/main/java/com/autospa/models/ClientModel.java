@@ -1,4 +1,4 @@
-package com.autospa.main;
+package com.autospa.models;
 
 import java.io.Serializable;
 

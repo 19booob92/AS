@@ -1,4 +1,4 @@
-package com.autospa.server;
+package com.autospa.controllers;
 
 import java.io.IOException;
 import java.net.Socket;
@@ -17,15 +17,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.autospa.main.ClientController;
-import com.autospa.main.ClientModel;
-import com.autospa.main.Server;
-import com.autospa.utils.ServerProperties;
+import com.autospa.models.ClientModel;
+import com.autospa.properties.ServerProperties;
 
 @Controller
 public class HomeController {
 
-	private Server server = null;
+	private ServerController server = null;
 	private static final Logger logger = LoggerFactory
 			.getLogger(HomeController.class);
 
@@ -39,7 +37,7 @@ public class HomeController {
 	public @ResponseBody void start() {
 		if (server == null) {
 			try {
-				server = new Server();
+				server = new ServerController();
 				server.startServer(ServerProperties.SERVER_IP);
 			} catch (IOException e) {
 				logger.error("Nie uda³o siê uruchomiæ serwera");

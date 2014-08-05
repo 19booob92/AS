@@ -6,6 +6,8 @@ import java.io.FileWriter;
 
 import javax.swing.JOptionPane;
 
+import com.autospa.properties.ServerProperties;
+
 public class FilesOperations {
 	private File file;
 	private static FileWriter fileWriter;
