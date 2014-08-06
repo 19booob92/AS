@@ -2,16 +2,18 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<script src="jquery-1.11.1.min.js"></script>
-<script src="controller.js"></script>
+<script src="views/jquery-1.11.1.min.js"></script>
+<script src="controllers/mainPageController.js"></script>
 
 </head>
 <body>
 
-Odśwież listę myjni: <input id="btn" type="button"  value="Odśwież"/> </br>
-Zarządzaj serwerem: <input id="goToServerManager" type="button"  value="Zarządzaj"  onClick="location.href='/Auto/manager.html'"/> </br>
+<input id="refresh" type="button"  value="Odśwież listę"/>
+<input id="goToServerManager" type="button"  value="Zarządzaj"  onClick="location.href='/Auto/views/manager.html'"/> 
+<input id="goToWorkingTime" type="button"  value="Czas działania"  onClick="location.href='/Auto/views/workingTime.html'"/> 
+</br></br>
 
-<table style="width:500px">
+<table style="width:1600 px">
 <tr>
 	<td>ID</td>
 	<td>Nazwa myjni</td>
@@ -19,7 +21,10 @@ Zarządzaj serwerem: <input id="goToServerManager" type="button"  value="Zarząd
 	<td>Ilość monet 1 zł</td>
 	<td>Ilość monet 2 zł</td>
 	<td>Ilość monet 5 zł</td>
-	<td>Ilość żetonów zł</td>
+	<td>Ilość żetonów</td>
+	<td>Numer protokołu</td>
+	<td>Numer myjni</td>
+	<td>Liczba stanowisk</td>
 </tr>
 </table> 
 
