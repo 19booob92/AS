@@ -34,6 +34,9 @@ $(function() {
 						tr.css('background-color', '#F00');
 					}
 					tr.append("<td>" + data[i].onePLNCoins + "</td>");
+					tr.append("<td>" + data[i].twoPLNCoins + "</td>");
+					tr.append("<td>" + data[i].fivePLNCoins + "</td>");
+					tr.append("<td>" + data[i].tokensAmount + "</td>");
 					$('table').append(tr);
 				}
 			});

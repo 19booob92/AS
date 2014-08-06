@@ -3,6 +3,7 @@ package com.autospa.controllers;
 import java.io.IOException;
 import java.net.Socket;
 import java.text.DateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -37,24 +38,27 @@ public class HomeController {
 
 	@RequestMapping(value = "/start", method = RequestMethod.GET)
 	public @ResponseBody void start() {
-		if (server == null) {
+		
 			try {
-				server = new ServerController();
-				server.startServer(ServerProperties.SERVER_IP);
+				if (server == null) {
+					server = new ServerController();
+					server.startServer(ServerProperties.SERVER_IP);
+				} else if (server.isRunning() == false) {
+					server.setIsRunning(true);
+					server.getSimpleClient().sendKeepAlive();
+				} else {
+					logger.error("Serwer jest ju¿ uruchomiony");
+				}
 			} catch (IOException e) {
 				logger.error("Nie uda³o siê uruchomiæ serwera");
 				e.printStackTrace();
 			}
-		} else {
-			logger.error("Serwer jest ju¿ uruchomiony");
-		}
 
 	}
 
 	@RequestMapping(value = "/stop", method = RequestMethod.GET)
 	public @ResponseBody void stop() {
-		server.stopServer();
-		server = null;
+		server.setIsRunning(false);
 	}
 
 }

@@ -4,18 +4,30 @@ import java.io.Serializable;
 
 public class ClientModel implements Serializable{
 
-	private String name;
 	private static int iterator = 0;
 	private int id = ++iterator;
-	private boolean isAvaliable;
-	private int onePLNCoins;
+	private String carWasherName;
 	
+	private int onePLNCoins;
+	private int twoPLNCoins;
+	private int fivePLNCoins;
+	private int tokensAmount;
+	
+	private int protocolNumber;
+	private int carWasherNo;
+	private int statesAmmount;
+	
+	private boolean isAvaliable;
+	
+	private int activeZawTechAmount;
+	private int pumpsAmount;
+	private int lightsAmount;
 	
 	public String getName() {
-		return name;
+		return carWasherName;
 	}
 	public void setName(String name) {
-		this.name = name;
+		this.carWasherName = name;
 	}
 	public static int getIterator() {
 		return iterator;
@@ -46,5 +58,65 @@ public class ClientModel implements Serializable{
 	public boolean equals(Object clientModel) {
 		ClientModel client = (ClientModel) clientModel;
 		return this.getName().equals(client.getName());
+	}
+	public String getCarWasherName() {
+		return carWasherName;
+	}
+	public void setCarWasherName(String carWasherName) {
+		this.carWasherName = carWasherName;
+	}
+	public int getTwoPLNCoins() {
+		return twoPLNCoins;
+	}
+	public void setTwoPLNCoins(int twoPLNCoins) {
+		this.twoPLNCoins = twoPLNCoins;
+	}
+	public int getFivePLNCoins() {
+		return fivePLNCoins;
+	}
+	public void setFivePLNCoins(int fivePLNCoins) {
+		this.fivePLNCoins = fivePLNCoins;
+	}
+	public int getTokensAmount() {
+		return tokensAmount;
+	}
+	public void setTokensAmount(int tokensAmount) {
+		this.tokensAmount = tokensAmount;
+	}
+	public int getProtocolNumber() {
+		return protocolNumber;
+	}
+	public void setProtocolNumber(int protocolNumber) {
+		this.protocolNumber = protocolNumber;
+	}
+	public int getCarWasherNo() {
+		return carWasherNo;
+	}
+	public void setCarWasherNo(int carWasherNo) {
+		this.carWasherNo = carWasherNo;
+	}
+	public int getStatesAmmount() {
+		return statesAmmount;
+	}
+	public void setStatesAmmount(int statesAmmount) {
+		this.statesAmmount = statesAmmount;
+	}
+	public int getActiveZawTechAmount() {
+		return activeZawTechAmount;
+	}
+	public void setActiveZawTechAmount(int activeZawTechAmount) {
+		this.activeZawTechAmount = activeZawTechAmount;
+	}
+	public int getPumpsAmount() {
+		return pumpsAmount;
+	}
+	public void setPumpsAmount(int pumpsAmount) {
+		this.pumpsAmount = pumpsAmount;
+	}
+	public int getLightsAmount() {
+		return lightsAmount;
+	}
+	public void setLightsAmount(int lightsAmount) {
+		this.lightsAmount = lightsAmount;
 	}
 }

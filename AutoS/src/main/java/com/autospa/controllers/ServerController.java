@@ -49,7 +49,11 @@ public class ServerController {
 	}
 
 	public List<ClientModel> getClientsList() {
-		return clientsList;
+		if (clientsList != null) {
+			return clientsList;
+		} else {
+			return new ArrayList<>();
+		}
 	}
 
 	public void setClientsList(List<ClientModel> clientsList) {
@@ -76,12 +80,20 @@ public class ServerController {
 		}
 	}
 
-	public void stopServer() {
-		try {
-			isRunning = false;
-			serverSocket.close();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+	public ServerSocket getServerSocket() {
+		return serverSocket;
 	}
+
+	public void setServerSocket(ServerSocket serverSocket) {
+		this.serverSocket = serverSocket;
+	}
+
+	public boolean isRunning() {
+		return isRunning;
+	}
+	
+	public void setIsRunning(boolean isRunning) {
+		this.isRunning = isRunning;
+	}
+
 }

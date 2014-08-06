@@ -4,15 +4,18 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.Socket;
+import java.util.Arrays;
 import java.util.Timer;
 import java.util.TimerTask;
 
 import org.apache.commons.lang3.ArrayUtils;
+import org.springframework.validation.MessageCodesResolver;
 
 import com.autospa.models.ClientModel;
 import com.autospa.properties.ProtocolProperties;
 import com.autospa.properties.ServerProperties;
 import com.autospa.utils.FilesOperations;
+import com.autospa.utils.MessageRecognizer;
 
 public class ClientController implements Runnable {
 
@@ -24,7 +27,8 @@ public class ClientController implements Runnable {
 	private ServerController server;
 	private int keepAliveCounter = 0;
 	private String coinValue;
-
+	private MessageRecognizer messageRecognizer;
+	
 	ClientModel clientModel = new ClientModel();
 
 	public ClientController(Socket socket, ServerController server) {
@@ -38,48 +42,53 @@ public class ClientController implements Runnable {
 			clientModel.setAvaliable(true);
 			stdIn = new DataInputStream(socketClient.getInputStream());
 			stdOut = new DataOutputStream(socketClient.getOutputStream());
+			messageRecognizer = new MessageRecognizer(this, clientModel, stdIn);
 			setScheduler();
-			while (true) {
+			while (server.isRunning()) {
 				System.out.println("Oczekiwanie na klientow...");
 				// getIdentifyMessage();
 				getMessage();
 			}
 		} catch (IOException ex) {
 			clientModel.setAvaliable(false);
+			keepAliveCounter = 0;
 		}
 	}
 
 	private void getMessage() throws IOException {
 		stdIn.read(headerData);
-		if (headerData[ProtocolProperties.FIRST_GROUP_BYTE] == (byte) 0xFF
-				&& headerData[ProtocolProperties.SECOND_GROUP_BYTE] == (byte) 0xFE) {
-			if (headerData[ProtocolProperties.FIRST_MSG_BYTE] == (byte) 0x00
-					&& headerData[ProtocolProperties.SECOND_MSG_BYTE] == (byte) 0x03) {
-
-				sendKeepAlive();
-			} else if (true) {
-
-			} else if (true) {
-
-			}
-
-		} else if (headerData[ProtocolProperties.FIRST_GROUP_BYTE] == (byte) 0x00
-				&& headerData[ProtocolProperties.SECOND_GROUP_BYTE] == (byte) 0x02) {
-
-			sendOnePLNCoinsCountRequest();
-		} else if (true) {
-
-		} else if (true) {
-
-		}
+		messageRecognizer.checkMessage(headerData);
 	}
+	
+	public void setPeriodValueInterval() throws IOException {
+//		FIXME
+		data = new byte[ProtocolProperties.SIX_BYTES_MSG];
+		stdIn.read(data);
 
+		FilesOperations.saveDataToFile(System.currentTimeMillis()
+				+ "   Grupa: POTWIERDZENIE_I_STEROWANIE  interwa³ wartoœci cyklicznej " + Arrays.toString(data)
+				+ "\n");
+
+		sendMessage(ProtocolProperties.OK_ACK_MSG);
+	}
+	
+	public void setServerIPAddress() throws IOException {
+//		FIXME
+		data = new byte[4];
+		stdIn.read(data);
+
+		FilesOperations.saveDataToFile(System.currentTimeMillis()
+				+ "   Grupa: POTWIERDZENIE_I_STEROWANIE  zmiana adresu IP serwera " + Arrays.toString(data)
+				+ "\n");
+
+		sendMessage(ProtocolProperties.OK_ACK_MSG);
+	}
+		
 	public void sendKeepAlive() throws IOException {
-		data = new byte[1];
+		data = new byte[ProtocolProperties.ONE_BYTE_MSG];
 
 		stdIn.read(data);
 		++keepAliveCounter;
-
 		byte tmp = data[0];
 		data[0] = (byte) (tmp + 1);
 
@@ -90,39 +99,13 @@ public class ClientController implements Runnable {
 		sendMessage(headerData, data);
 	}
 
-	public void sendOnePLNCoinsCountRequest() throws IOException {
-		data = new byte[2];
-		stdIn.read(data);
-
-		switch (headerData[ProtocolProperties.FIRST_MSG_BYTE]) {
-		case (byte) 0x00:
-			coinValue = "1 z³";
-			break;
-		case (byte) 0x01:
-			coinValue = "2 z³";
-			break;
-		case (byte) 0x02:
-			coinValue = "5 z³";
-			break;
-		}
-
-		FilesOperations.saveDataToFile(System.currentTimeMillis()
-				+ "   Grupa: CYKLICZNE_DANE_FINANSOWE iloœæ monet: " + data[0]
-				+ ',' + data[1] + "  " + coinValue + " stanowisko :  "
-				+ headerData[ProtocolProperties.SECOND_MSG_BYTE] + "\n");
-		clientModel.setOnePLNCoins(data[0]);
-
-		sendMessage(new byte[] { (byte) 0xFF, (byte) 0xFE, (byte) 0x00,
-				(byte) 0x01 });
-	}
-
 	private void sendMessage(byte[] message, byte[] data) throws IOException {
 		byte[] concanateMessage = ArrayUtils.addAll(message, data);
 		stdOut.write(concanateMessage);
 		stdOut.flush();
 	}
 
-	private void sendMessage(byte[] message) throws IOException {
+	public void sendMessage(byte[] message) throws IOException {
 		stdOut.write(message);
 		stdOut.flush();
 	}
@@ -135,12 +118,7 @@ public class ClientController implements Runnable {
 			@Override
 			public void run() {
 				System.err.println("KA Counter: " + keepAliveCounter);
-				try {
-					sendOnePLNCoinsCountRequest();
-				} catch (IOException ex) {
-					System.err.print(ex + "nie uda³o siê wyslac pytania");
-				}
-				if (keepAliveCounter < 3) {
+				if (keepAliveCounter < 1) {
 					clientModel.setAvaliable(false);
 				} else {
 					clientModel.setAvaliable(true);
@@ -151,7 +129,6 @@ public class ClientController implements Runnable {
 	}
 
 	public ClientModel getNewClient() {
-
 		clientModel
 				.setName(this.socketClient.getInetAddress().getHostAddress());
 		return clientModel;
