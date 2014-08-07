@@ -1,12 +1,14 @@
 package com.autospa.models;
 
 import java.io.Serializable;
+import java.util.Date;
 
 public class ClientModel implements Serializable{
 
 	private static int iterator = 0;
 	private int id = ++iterator;
 	private String carWasherName;
+	private String lastActivity;
 	
 	private int onePLNCoins;
 	private int twoPLNCoins;
@@ -118,5 +120,11 @@ public class ClientModel implements Serializable{
 	}
 	public void setLightsAmount(int lightsAmount) {
 		this.lightsAmount = lightsAmount;
+	}
+	public String getLastActivity() {
+		return lastActivity;
+	}
+	public void setLastActivity(String date) {
+		this.lastActivity = date;
 	}
 }

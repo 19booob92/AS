@@ -17,12 +17,16 @@ $(function() {
 		$.ajax({
 			url : "/Auto/start",
 			success : function(result) {
+				console.log(result);
+				if (result === false) {
+					alert("Serwer jest już uruchomiony");
+				}
 			}
 		});
 		$('#serwerState').text("Serwer Uruchomiony !");
-		alert("Uruchomiono serwer");
 		$('#btnStartServer').css( "background-color", "#585e61" );
 		$('#btnStartServer').attr("disabled", true);
+		
 	});
 
 	$('#refresh').click(function() {
@@ -56,6 +60,7 @@ var fetchInfo = function() {
 	headerTr.append("<td>ID</td>");
 	headerTr.append("<td>Nazwa myjni</td>");
 	headerTr.append("<td>Aktywność</td>");
+	headerTr.append("<td>Ostatnia aktywność</td>");
 	$('table').append(headerTr);
 	
 	$.getJSON("/Auto/carWashers", function(data) {
@@ -71,7 +76,7 @@ var fetchInfo = function() {
 				tr.append("<td>Nieaktywna</td>");
 				tr.css('background-color', '#F00');
 			}
-			
+			tr.append("<td>" + data[i].lastActivity + "</td>");
 			$('table').append(tr);
 		}
 	});

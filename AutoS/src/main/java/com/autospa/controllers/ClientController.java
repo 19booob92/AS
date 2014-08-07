@@ -86,7 +86,7 @@ public class ClientController implements Runnable {
 		
 	public void sendKeepAlive() throws IOException {
 		data = new byte[ProtocolProperties.ONE_BYTE_MSG];
-
+		
 		stdIn.read(data);
 		++keepAliveCounter;
 		byte tmp = data[0];

@@ -3,7 +3,10 @@ package com.autospa.utils;
 import java.io.DataInputStream;
 import java.io.IOException;
 import java.math.BigInteger;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
+import java.util.Date;
 
 import com.autospa.controllers.ClientController;
 import com.autospa.controllers.ServerController;
@@ -33,7 +36,13 @@ public class MessageRecognizer {
 
 			if (headerData[ProtocolProperties.FIRST_MSG_BYTE] == (byte) 0x00
 					&& headerData[ProtocolProperties.SECOND_MSG_BYTE] == (byte) 0x03) {
-
+				
+				Date date = new Date(System.currentTimeMillis());
+				System.err.println(System.currentTimeMillis());
+				DateFormat formatter = new SimpleDateFormat("HH:mm:ss:SSS");
+				String dateFormatted = formatter.format(date);
+				System.err.println(dateFormatted);
+				clientModel.setLastActivity(dateFormatted);
 				clientController.sendKeepAlive();
 			} else if (headerData[ProtocolProperties.FIRST_MSG_BYTE] == (byte) 0x00
 					&& headerData[ProtocolProperties.SECOND_MSG_BYTE] == (byte) 0x01) {

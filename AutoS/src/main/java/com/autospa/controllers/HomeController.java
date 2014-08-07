@@ -42,21 +42,24 @@ public class HomeController {
 	}
 
 	@RequestMapping(value = "/start", method = RequestMethod.GET)
-	public @ResponseBody void start() {
+	public @ResponseBody boolean start() {
 		
 			try {
 				if (server == null) {
 					server = new ServerController();
 					server.startServer(ServerProperties.SERVER_IP);
+					return true;
 				} else if (server.isRunning() == false) {
 					server.setIsRunning(true);
-					server.getSimpleClient().sendKeepAlive();
+					return true;
 				} else {
 					logger.error("Serwer jest ju¿ uruchomiony");
+					return false;
 				}
 			} catch (IOException e) {
 				logger.error("Nie uda³o siê uruchomiæ serwera");
 				e.printStackTrace();
+				return false;
 			}
 
 	}
