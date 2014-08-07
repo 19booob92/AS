@@ -120,6 +120,7 @@ public class ClientController implements Runnable {
 				System.err.println("KA Counter: " + keepAliveCounter);
 				if (keepAliveCounter < 1) {
 					clientModel.setAvaliable(false);
+					FilesOperations.saveDataToFile("Alaaarrmmmm!!!!");
 				} else {
 					clientModel.setAvaliable(true);
 				}

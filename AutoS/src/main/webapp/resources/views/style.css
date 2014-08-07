@@ -1,0 +1,315 @@
+/*
+    designed by AlphaStudio.pl
+    http://www.alphastudio.pl/
+    released under Creative Commons Attribution 3.0 license
+*/
+
+* {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font: 16px Arial, Helvetica, sans-serif;
+    color: #3C3C3C;
+    background: #000;
+}
+
+h1, h2 {
+    text-transform: uppercase;
+    font-weight: normal;
+}
+
+h1 {
+    font-size: 3.5em;
+}
+
+h2 {
+    font-size: 2.75em;
+}
+
+p {
+    padding: .75em 0;
+    line-height: 1.5em;
+}
+
+a {
+    text-decoration: none;
+    color: #F86932;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+/* header */
+
+#header {
+    width: 100%;
+    min-width: 1200px;
+    background: #000000;
+}
+
+#header2 {
+    width: 1170px;
+    margin: 0 auto;
+    padding: 40px 15px 50px 15px;
+}
+
+#header h1 {
+    text-transform: uppercase;
+    text-align: center;
+    color: White;
+    padding: 0;
+}
+
+#header h1 a {
+    color: White;
+    text-decoration: none;
+}
+
+p#subtitle {
+    font-size: 1.75em;
+    padding: 0;
+    text-transform: lowercase;
+    text-align: center;
+    color: #CBC1A3;
+}
+
+/* intro */
+
+#intro {
+    width: 100%;
+}
+
+#mainimg {
+    display: block;
+    width: 100%;
+    min-width: 1200px;
+	height: auto;
+}
+
+/* menu */
+
+#menu, #bar, #footer {
+    clear: both;
+    width: 100%;
+    min-width: 1200px;
+}
+
+#menu {
+    height: 100px;
+}
+
+#menu2 {
+    width: 1200px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+#menu ul {
+    list-style: none;
+}
+
+#menu ul li {
+    display: inline-block;
+}
+
+#menu ul li a {
+    display: block;
+    height: 65px;
+    padding: 35px 45px 0 45px;
+    text-transform: uppercase;
+    text-decoration: none;
+    color: #E9E9E9;
+}
+
+#menu ul li.active a {
+    color: #AE471F;
+    background: url('images/menuactive.gif') no-repeat center;
+}
+
+/* main */
+
+#main {
+    clear: both;
+    width: 1170px;
+    margin: 0 auto;
+    padding: 70px 15px 20px 15px;
+}
+
+/* content */
+
+#content {
+    float: left;
+    width: 760px;
+}
+
+#content .post {
+    padding-bottom: 6em;
+}
+
+#content .entry {
+    padding-top: 2em;
+}
+
+#content h2 a {
+    color: #3C3C3C;
+    text-decoration: none;
+}
+
+p.postmeta {
+    font-size: 1.5em;
+    text-transform: lowercase;
+    padding-top: .5em;
+    color: #8C8C8C;
+}
+
+p.readmore {
+    padding: 3em 0 0 0;
+    clear: both;
+}
+
+p.readmore a {
+    display: block;
+    width: 180px;
+    height: 54px;
+    margin: 0 auto;
+    text-align: center;
+    line-height: 54px;
+    text-decoration: none;
+    text-transform: uppercase;
+    color: White;
+    background: #CB412A;
+}
+
+p.readmore a:hover {
+    color: #3C3C3C;
+    background: #C5C5C5;
+}
+
+/* sidebar */
+
+#sidebar {
+    float: right;
+    width: 350px;
+}
+
+#sidebar h2 {
+    font-size: 2em;
+}
+
+#sidebar .box {
+    padding: 1.5em 0 3em 0;
+}
+
+#sidebar p {
+    line-height: 2em;
+}
+
+#sidebar ul {
+    list-style: none;
+    margin: 2em 0 3.5em 0;
+    border-top: 1px dashed #CACACA;
+}
+
+#sidebar ul li {
+    padding: .3em 0 .3em 26px;
+    line-height: 1.8em;
+    background: url('images/li.gif') no-repeat 0 1em;
+    border-bottom: 1px dashed #CACACA;
+}
+
+#sidebar ul li a {
+}
+
+/* bar */
+
+#bar {
+    color: #C4D6C8;
+    background: #3A6B55;
+}
+
+#bar2 {
+    width: 1185px;
+    margin: 0 auto;
+    padding-left: 15px;
+}
+
+#bar .col {
+    float: left;
+    width: 249px;
+    padding: 80px 58px 90px 0;
+}
+
+#bar h2 {
+    padding-bottom: 1em;
+    font-size: 1.5em;
+    text-align: center;
+    color: #8AA79A;
+}
+
+#bar p {
+    text-align: center;
+}
+
+#bar p.readmore {
+    padding-top: 2.5em;
+}
+
+#bar p.readmore a:hover {
+    background: #477460;
+}
+
+#bar img {
+    display: block;
+    margin: 0 auto 4em auto;
+}
+
+.lastcol {
+    padding-right: 0 !important;
+}
+
+img.left {
+    display: block;
+    float: left;
+    padding: 1em 40px 2em 0;
+}
+
+.clearing {
+    clear: both;
+    height: 1px;
+    overflow: hidden;
+}
+
+/* footer */
+
+#footer {
+    color: #C8C8C8;
+    background: #0B0B0B;
+}
+
+#footer2 {
+    width: 1170px;
+    margin: 0 auto;
+    padding: 80px 15px 120px 15px;
+}
+
+#footer p {
+    text-align: center;
+    text-transform: uppercase;
+}
+
+button, input[type="button"], input[type="submit"] {
+  background: #000;
+  -webkit-border-radius: 28;
+  -moz-border-radius: 28;
+  border-radius: 28px;
+  text-shadow: 4px 2px 4px #666666;
+  font-family: Arial;
+  color: #bd7500;
+  font-size: 11px;
+  padding: 10px 20px 10px 20px;
+  text-decoration: none;
+}
+

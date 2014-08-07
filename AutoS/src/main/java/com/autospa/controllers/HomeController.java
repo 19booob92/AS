@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.net.Socket;
 import java.text.DateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -33,7 +34,11 @@ public class HomeController {
 
 	@RequestMapping(value = "/carWashers", method = RequestMethod.GET)
 	public @ResponseBody List<ClientModel> getConnectedCarWashers() {
-		return server.getClientsList();
+		if (server == null) {
+			return Collections.EMPTY_LIST;
+		} else {
+			return server.getClientsList();
+		}
 	}
 
 	@RequestMapping(value = "/start", method = RequestMethod.GET)

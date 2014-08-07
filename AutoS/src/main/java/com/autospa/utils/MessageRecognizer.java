@@ -83,8 +83,10 @@ public class MessageRecognizer {
 	}
 
 	private void setCarWasherName() throws IOException {
-		data = new byte[15];
-
+		int nameLenght = inputStream.readByte();
+		
+		data = new byte[nameLenght];
+		
 		inputStream.read(data);
 		// FIXME
 		// clientModel.setName(Arrays.toString(data));

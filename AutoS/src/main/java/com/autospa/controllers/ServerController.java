@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -49,11 +50,7 @@ public class ServerController {
 	}
 
 	public List<ClientModel> getClientsList() {
-		if (clientsList != null) {
-			return clientsList;
-		} else {
-			return new ArrayList<>();
-		}
+		return clientsList;
 	}
 
 	public void setClientsList(List<ClientModel> clientsList) {
@@ -91,7 +88,7 @@ public class ServerController {
 	public boolean isRunning() {
 		return isRunning;
 	}
-	
+
 	public void setIsRunning(boolean isRunning) {
 		this.isRunning = isRunning;
 	}
