@@ -67,19 +67,19 @@ public class MessageRecognizer {
 			if (headerData[ProtocolProperties.FIRST_MSG_BYTE] == (byte) 0x00
 					&& headerData[ProtocolProperties.SECOND_MSG_BYTE] == (byte) 0x01) {
 
-				setProtocolNo();
+				setProtocolNo(headerData);
 			} else if (headerData[ProtocolProperties.FIRST_MSG_BYTE] == (byte) 0x00
 					&& headerData[ProtocolProperties.SECOND_MSG_BYTE] == (byte) 0x02) {
 
-				setCarWasherName();
+				setCarWasherName(headerData);
 			} else if (headerData[ProtocolProperties.FIRST_MSG_BYTE] == (byte) 0x00
 					&& headerData[ProtocolProperties.SECOND_MSG_BYTE] == (byte) 0x03) {
 
-				setCarWasherNo();
+				setCarWasherNo(headerData);
 			} else if (headerData[ProtocolProperties.FIRST_MSG_BYTE] == (byte) 0x00
 					&& headerData[ProtocolProperties.SECOND_MSG_BYTE] == (byte) 0x04) {
 
-				setStatesAmount();
+				setStatesAmount(headerData);
 			}
 		} else if (headerData[ProtocolProperties.FIRST_GROUP_BYTE] == (byte) 0x00
 				&& headerData[ProtocolProperties.SECOND_GROUP_BYTE] == (byte) 0x02) {
@@ -91,7 +91,7 @@ public class MessageRecognizer {
 		}
 	}
 
-	private void setCarWasherName() throws IOException {
+	private void setCarWasherName(byte[] headerData) throws IOException {
 		int nameLenght = inputStream.readByte();
 		
 		data = new byte[nameLenght];
@@ -99,29 +99,29 @@ public class MessageRecognizer {
 		inputStream.read(data);
 		// FIXME
 		// clientModel.setName(Arrays.toString(data));
-		clientController.sendMessage(ProtocolProperties.OK_ACK_MSG);
+		clientController.sendMessage(ProtocolProperties.OK_ACK_MSG, headerData);
 	}
 
-	public void setProtocolNo() throws IOException {
+	public void setProtocolNo(byte[] headerData) throws IOException {
 		data = new byte[ProtocolProperties.FOUR_BYTES_MSG];
 
 		inputStream.read(data);
 		clientModel.setProtocolNumber(Integer.valueOf(Arrays.toString(data)));
 
-		clientController.sendMessage(ProtocolProperties.OK_ACK_MSG);
+		clientController.sendMessage(ProtocolProperties.OK_ACK_MSG, headerData);
 	}
 
-	public void setCarWasherNo() throws IOException {
+	public void setCarWasherNo(byte[] headerData) throws IOException {
 		data = new byte[ProtocolProperties.FOUR_BYTES_MSG];
 
 		inputStream.read(data);
 		clientModel.setCarWasherNo(Integer.valueOf(Arrays.toString(data)));
-		clientController.sendMessage(ProtocolProperties.OK_ACK_MSG);
+		clientController.sendMessage(ProtocolProperties.OK_ACK_MSG, headerData);
 	}
 
-	public void setStatesAmount() throws IOException {
+	public void setStatesAmount(byte[] headerData) throws IOException {
 		clientModel.setStatesAmmount(Integer.valueOf(inputStream.readByte()));
-		clientController.sendMessage(ProtocolProperties.OK_ACK_MSG);
+		clientController.sendMessage(ProtocolProperties.OK_ACK_MSG, headerData);
 	}
 
 	public void sendOnePLNCoinsCountRequest(byte[] header) throws IOException {
@@ -146,7 +146,7 @@ public class MessageRecognizer {
 				+ header[ProtocolProperties.SECOND_MSG_BYTE] + "\n");
 		clientModel.setOnePLNCoins(data[0]);
 
-		clientController.sendMessage(ProtocolProperties.OK_ACK_MSG);
+		clientController.sendMessage(ProtocolProperties.OK_ACK_MSG, header);
 	}
 
 }

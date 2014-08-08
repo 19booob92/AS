@@ -9,7 +9,6 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import org.apache.commons.lang3.ArrayUtils;
-import org.springframework.validation.MessageCodesResolver;
 
 import com.autospa.models.ClientModel;
 import com.autospa.properties.ProtocolProperties;
@@ -99,7 +98,7 @@ public class ClientController implements Runnable {
 		sendMessage(headerData, data);
 	}
 
-	private void sendMessage(byte[] message, byte[] data) throws IOException {
+	public void sendMessage(byte[] message, byte[] data) throws IOException {
 		byte[] concanateMessage = ArrayUtils.addAll(message, data);
 		stdOut.write(concanateMessage);
 		stdOut.flush();
