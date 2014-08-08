@@ -63,6 +63,16 @@ public class HomeController {
 			}
 
 	}
+	
+	@RequestMapping(value = "/serverStatus", method = RequestMethod.GET)
+	public @ResponseBody boolean getSerwerStatus() {
+			if (server != null && server.isRunning())  {
+				return true;
+			} else {
+				return false;
+			}
+
+	}
 
 	@RequestMapping(value = "/stop", method = RequestMethod.GET)
 	public @ResponseBody void stop() {

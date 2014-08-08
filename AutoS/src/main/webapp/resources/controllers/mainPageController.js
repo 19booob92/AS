@@ -1,7 +1,16 @@
 selectedTab = 0;
 
 $(function() {
-	
+	$.ajax({
+		url : "/Auto/serverStatus",
+		success : function(result) {
+			if (result === true) {
+				$('#serwerState').text("Serwer Uruchomiony !");
+				$('#btnStartServer').css( "background-color", "#585e61" );
+				$('#btnStartServer').attr("disabled", true);
+			}
+		}
+	});
 	
 	fetchInfo();
 	$('#btnStopServer').click(function() {
@@ -26,6 +35,7 @@ $(function() {
 		$('#serwerState').text("Serwer Uruchomiony !");
 		$('#btnStartServer').css( "background-color", "#585e61" );
 		$('#btnStartServer').attr("disabled", true);
+
 		
 	});
 
