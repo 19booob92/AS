@@ -3,13 +3,17 @@ package com.cohesiva.autospa.service;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.security.core.userdetails.UserDetailsService;
 
 import com.cohesiva.autospa.dao.UserDAO;
 import com.cohesiva.autospa.model.User;
 
-@Service
+@Service("userDetailsService")
 @Transactional
 public class UserServiceImpl implements UserService {
 	
@@ -39,6 +43,14 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public List<User> getUsers() {
 		return userDAO.getUsers();
+	}
+
+	@Override
+	public UserDetails loadUserByUsername(String id)
+			throws UsernameNotFoundException {
+		//FIXME
+		System.out.println(id + "  " + userDAO.getUser( Long.getLong(id)));
+		return (UserDetails) userDAO.getUser( Long.getLong(id) );
 	}
 
 }
