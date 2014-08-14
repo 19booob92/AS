@@ -1,0 +1,105 @@
+<!DOCTYPE HTML>
+<html lang="">
+<head>
+<script src="jquery-1.11.1.min.js"></script>
+<script src="../controllers/userPageController.js"></script>
+
+<meta charset="UTF-8">
+<meta name="description" content="">
+<meta name="keywords" content="">
+<title>autoSPA</title>
+<link href="style.css" rel="stylesheet" type="text/css">
+</head>
+<body>
+	<div id="header">
+		<div id="header2">
+			<h1></h1>
+		</div>
+		<!-- header2 -->
+	</div>
+	<!-- header -->
+	<div id="intro"></div>
+	<!-- intro -->
+	<div id="menu">
+		<div id="menu2">
+			<ul>
+				<input class="active" id="home" type="button" value="Home"
+					onClick="location.href='/Auto/home.html'" />
+				<input id="carWashers" type="button" value="Myjnie"
+					onClick="location.href='/Auto/views/carWashersInfo.html'" />
+				<input id="manager" type="button" value="Zarządzanie serwerem"
+					onClick="location.href='/Auto/views/manager.html'" />
+				<input id="userList" type="button" value="Użytkownicy"
+					onClick="location.href='/Auto/views/usersTable.html'" />
+			</ul>
+		</div>
+	</div>
+	<!-- menu -->
+	<!-- menu2 -->
+	<div id="main">
+		<div id="content">
+			<div class="post">
+				<h2>
+					<a href="#">Lista użytkowników</a>
+				</h2>
+
+				<div id="addUserFormDiv" class="entry">
+
+					<form id="addUserForm" enctype='application/json'>
+						Imie użytkownika: <input type="imie" name="imie" id="userNameIn">
+						Nazwisko użytkownika: <input type="nazwisko" name="nazwisko"
+							id="userSurNameIn">
+				
+				</form>
+
+				<input type="button" name="submitAddUser" value="Zatwierdz"
+					id="submitUser">
+				</div>
+			</div>
+
+
+			<div id="tableDiv" class="entry">
+				<input id="fetchUsers" type="button" value="Pobież listę" />
+
+				<table style="width: 800px">
+
+				</table>
+
+			</div>
+		</div>
+		<!-- post -->
+	</div>
+	<!-- content -->
+	<div id="sidebar">
+		<h2>Dane myjni</h2>
+		<ul>
+			<li id="fetchUsers"><a href="#">Użytkownicy</a></li>
+			<li id="fetchFVs"'><a href="#">Faktury</a></li>
+			<li id="fetchCards"><a href="#">Karty</a></li>
+		</ul>
+	</div>
+	<!-- sidebar -->
+	<div class="clearing">&nbsp;</div>
+	</div>
+	<!-- main -->
+	<div id="bar">
+		<div id="bar2">
+			<div class="col">
+				<h2>Dodaj użytkownika</h2>
+				<p class="readmore">
+					<a id="newUser" href="#">Dodaj !</a>
+				</p>
+			</div>
+
+			<div class="clearing">&nbsp;</div>
+		</div>
+	</div>
+	<!-- bar -->
+	<!-- bar2 -->
+	<div id="footer">
+		<div id="footer2"></div>
+	</div>
+	<!-- footer -->
+	<!-- footer2 -->
+</body>
+</html>

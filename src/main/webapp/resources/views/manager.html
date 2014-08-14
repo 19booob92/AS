@@ -1,0 +1,55 @@
+<!DOCTYPE HTML>
+<html lang="">
+<head>
+	<script src="jquery-1.11.1.min.js"></script>
+	<script src="../controllers/mainPageController.js"></script>
+    <meta charset="UTF-8">
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+    <title>autoSPA</title>
+    <link href="style.css" rel="stylesheet" type="text/css">
+</head>
+<body>
+    <div id="header">
+        <div id="header2">
+        </div><!-- header2 -->
+    </div><!-- header -->
+    <div id="intro">
+    </div><!-- intro -->
+    <div id="menu"><div id="menu2">
+            	<input class="active" id="home" type="button"  value="Home" onClick="location.href='/Auto/home.html'"/> 
+                <input id="carWashers" type="button"  value="Myjnie" onClick="location.href='/Auto/views/carWashersInfo.html'"/> 
+                <input id="manager" type="button"  value="Zarządzanie serwerem" onClick="location.href='/Auto/views/manager.html'"/>
+                <input id="userList" type="button"  value="Użytkownicy" onClick="location.href='/Auto/views/usersTable.html'"/>
+    </div></div><!-- menu --><!-- menu2 -->
+    <div id="main">
+        <div id="content">
+            <div class="post">
+                <h2><a href="#">Panel administracyjny serwera</a></h2>
+                <p class="postmeta"><a id="serwerState">Serwer wyłączony</a></p>
+                <div class="entry">
+                   <input id="btnStartServer" type="button"  value="Uruchom serwer"/>
+					<!--	  Zatrzymaj serwer: <input id="btnStopServer" type="button"  value="Zatrzymaj"/> </br> -->
+				   <input id="btnBackToMain" type="button"  value="Wroć" onClick="location.href='/Auto/home.html'"/> </br>
+                </div>
+            </div><!-- post -->
+        </div><!-- content -->
+        <div id="sidebar">
+            <h2>AutoSpa</h2>
+            <ul>
+                <li><a href="#">AutoSpa<a></li>
+                <li><a href="#">AutoSpa</a></li>
+                <li><a href="#">AutoSpa</a></li>
+                <li><a href="#">AutoSpa</a></li>
+            </ul>
+            <h2>AutoSpa</h2>
+            <div class="box">
+                <p>AutoSpa</p>
+            </div>
+        </div><!-- sidebar -->
+        <div class="clearing">&nbsp;</div>
+    </div><!-- main -->
+    <div id="footer"><div id="footer2">
+    </div></div><!-- footer --><!-- footer2 -->
+</body>
+</html>
