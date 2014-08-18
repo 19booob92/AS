@@ -9,14 +9,19 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import org.apache.commons.lang3.ArrayUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Component;
 
 import com.cohesiva.autospa.controller.ServerController;
 import com.cohesiva.autospa.model.CarWasher;
 import com.cohesiva.autospa.properties.ProtocolProperties;
 import com.cohesiva.autospa.properties.ServerProperties;
 
+@Component
+@Scope("prototype")
 public class CarWasherManager implements Runnable {
-
+	
 	private Socket socketClient;
 	private DataInputStream stdIn;
 	private DataOutputStream stdOut;

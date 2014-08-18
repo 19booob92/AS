@@ -6,10 +6,14 @@ import java.net.ServerSocket;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.context.annotation.Configuration;
+import org.springframework.stereotype.Controller;
+
 import com.cohesiva.autospa.model.CarWasher;
 import com.cohesiva.autospa.properties.ServerProperties;
 import com.cohesiva.autospa.utils.CarWasherManager;
 
+@Controller
 public class ServerController {
 	private ServerSocket serverSocket;
 	private int port;

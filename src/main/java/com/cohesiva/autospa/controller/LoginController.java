@@ -17,45 +17,22 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.cohesiva.autospa.utils.ComponentModelAndView;
-
 @Controller
 public class LoginController {
 
-	@Autowired
-	private ComponentModelAndView model;
-	
 	@RequestMapping(value = "/login", method = RequestMethod.GET)
-	public ModelAndView login(@RequestParam(value = "error", required = false) String error,
+	public String login(@RequestParam(value = "error", required = false) String error,
 			@RequestParam(value = "logout", required = false) String logout, HttpServletRequest request) {
 
-		if (error != null) {
-			model.addObject("error", getErrorMessage(request, "SPRING_SECURITY_LAST_EXCEPTION"));
-		}
-
-		if (logout != null) {
-			model.addObject("msg", "You've been logged out successfully.");
-		}
-		model.setViewName("login");
-
-		return model;
+		return "login";
 
 	}
 	
 	@RequestMapping(value = "/logout", method = RequestMethod.GET)
-	public ModelAndView logOut(@RequestParam(value = "error", required = false) String error,
+	public String logOut(@RequestParam(value = "error", required = false) String error,
 			@RequestParam(value = "logout", required = false) String logout, HttpServletRequest request) {
-
-		if (error != null) {
-			model.addObject("error", getErrorMessage(request, "SPRING_SECURITY_LAST_EXCEPTION"));
-		}
-
-		if (logout != null) {
-			model.addObject("msg", "You've been logged out successfully.");
-		}
-		model.setViewName("home");
-
-		return model;
+		
+		return "home";
 
 	}
 
@@ -74,25 +51,6 @@ public class LoginController {
 		}
 
 		return error;
-	}
-
-	// for 403 access denied page
-	@RequestMapping(value = "/403", method = RequestMethod.GET)
-	public ModelAndView accesssDenied() {
-
-		// check if user is login
-		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-		if (!(auth instanceof AnonymousAuthenticationToken)) {
-			UserDetails userDetail = (UserDetails) auth.getPrincipal();
-			System.out.println(userDetail);
-
-			model.addObject("username", userDetail.getUsername());
-
-		}
-
-		model.setViewName("403");
-		return model;
-
 	}
 
 }
