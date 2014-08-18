@@ -64,7 +64,7 @@ public class CarWasherManager implements Runnable {
 		stdIn.read(data);
 
 		FilesOperations.saveDataToFile(System.currentTimeMillis()
-				+ "   Grupa: POTWIERDZENIE_I_STEROWANIE  interwa³ wartoœci cyklicznej " + Arrays.toString(data)
+				+ "   Grupa: POTWIERDZENIE_I_STEROWANIE  interwal wartosci cyklicznej " + Arrays.toString(data)
 				+ "\n");
 
 		sendMessage(ProtocolProperties.OK_ACK_MSG);
