@@ -44,11 +44,11 @@ public class MessageRecognizer {
 			} else if (headerData[ProtocolProperties.FIRST_MSG_BYTE] == (byte) 0x00
 					&& headerData[ProtocolProperties.SECOND_MSG_BYTE] == (byte) 0x01) {
 
-				System.err.println("Otrzymano sygna³ OK-ACK");
+				System.err.println("Otrzymano sygnal OK-ACK");
 			} else if (headerData[ProtocolProperties.FIRST_MSG_BYTE] == (byte) 0x00
 					&& headerData[ProtocolProperties.SECOND_MSG_BYTE] == (byte) 0x02) {
 
-				System.err.println("Otrzymano sygna³ NACK");
+				System.err.println("Otrzymano sygnal NACK");
 			} else if (headerData[ProtocolProperties.FIRST_MSG_BYTE] == (byte) 0x01
 					&& headerData[ProtocolProperties.SECOND_MSG_BYTE] == (byte) 0x00) {
 
@@ -127,18 +127,18 @@ public class MessageRecognizer {
 
 		switch (header[ProtocolProperties.FIRST_MSG_BYTE]) {
 		case (byte) 0x00:
-			coinValue = "1 z³";
+			coinValue = "1 zï¿½";
 			break;
 		case (byte) 0x01:
-			coinValue = "2 z³";
+			coinValue = "2 zï¿½";
 			break;
 		case (byte) 0x02:
-			coinValue = "5 z³";
+			coinValue = "5 zï¿½";
 			break;
 		}
 
 		FilesOperations.saveDataToFile(System.currentTimeMillis()
-				+ "   Grupa: CYKLICZNE_DANE_FINANSOWE iloœæ monet: " + data[0]
+				+ "   Grupa: CYKLICZNE_DANE_FINANSOWE iloï¿½ï¿½ monet: " + data[0]
 				+ ',' + data[1] + "  " + coinValue + " stanowisko :  "
 				+ header[ProtocolProperties.SECOND_MSG_BYTE] + "\n");
 		clientModel.setOnePLNCoins(data[0]);
