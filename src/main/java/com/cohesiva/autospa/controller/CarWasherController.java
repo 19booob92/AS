@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.Collections;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -15,12 +16,13 @@ import com.cohesiva.autospa.properties.ServerProperties;
 @Controller
 public class CarWasherController {
 
-	private ServerController server = null;
+	@Autowired
+	private ServerController server;
 
 	@RequestMapping(value = "/carWashers", method = RequestMethod.GET)
 	public @ResponseBody List<CarWasher> getConnectedCarWashers() {
 
-		if (server == null) {
+		if (!server.isRunning()) {
 			return Collections.EMPTY_LIST;
 		} else {
 			return server.getClientsList();
@@ -31,11 +33,8 @@ public class CarWasherController {
 	public @ResponseBody boolean start() {
 
 		try {
-			if (server == null) {
-				server = new ServerController();
+			if (!server.isRunning()) {
 				server.startServer(ServerProperties.SERVER_IP);
-				return true;
-			} else if (server.isRunning() == false) {
 				server.setIsRunning(true);
 				return true;
 			} else {

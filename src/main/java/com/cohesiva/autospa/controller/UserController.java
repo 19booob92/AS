@@ -38,24 +38,13 @@ public class UserController {
 	}
 	
 	@RequestMapping(value="/edit/{id}", method=RequestMethod.GET)
-	public ModelAndView edituserPage(@PathVariable Long id) {
-		ModelAndView modelAndView = new ModelAndView("edit-user-form");
-		User user = userService.getUser(id);
-		modelAndView.addObject("user",user);
-		return modelAndView;
+	public String edituserPage(@PathVariable Long id) {
+		return "edit";
 	}
 	
 	@RequestMapping(value="/edit/{id}", method=RequestMethod.POST)
-	public ModelAndView edditinguser(@ModelAttribute User user, @PathVariable Integer id) {
-		
-		ModelAndView modelAndView = new ModelAndView("home");
-		
-		userService.updateUser(user);
-		
-		String message = "user was successfully edited.";
-		modelAndView.addObject("message", message);
-		
-		return modelAndView;
+	public String edditinguser(@ModelAttribute User user, @PathVariable Integer id) {
+		return "editById";
 	}
 	
 	@RequestMapping(value="/delete/{id}", method=RequestMethod.GET)

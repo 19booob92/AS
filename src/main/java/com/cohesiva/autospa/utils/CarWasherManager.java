@@ -15,6 +15,8 @@ import com.cohesiva.autospa.model.CarWasher;
 import com.cohesiva.autospa.properties.ProtocolProperties;
 import com.cohesiva.autospa.properties.ServerProperties;
 
+@Component
+@Scope("prototype")
 public class CarWasherManager implements Runnable {
 
 	private Socket socketClient;
